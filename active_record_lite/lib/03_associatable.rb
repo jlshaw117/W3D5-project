@@ -21,6 +21,19 @@ end
 class BelongsToOptions < AssocOptions
   def initialize(name, options = {})
     # ...
+    default = {
+      foreign_key: "#{name}_id".to_sym,
+      class_name: name.capitalize,
+      primary_key: :id
+    }
+
+    @association = default.merge(options).each do |method, value|
+
+      define_method("#{method}") {@association[method]}
+
+    end
+
+
   end
 end
 
